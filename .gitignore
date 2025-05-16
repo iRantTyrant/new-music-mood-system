@@ -1,0 +1,34 @@
+# Python cache
+__pycache__/
+*.py[cod]
+*.pyo
+mood-venv
+# Virtual environments
+venv/
+env/
+.venv/
+.env/
+
+# Audio data
+*.wav
+*.mp3
+
+# TensorFlow / Essentia models
+*.pb
+
+# Logs and temporary files
+*.log
+*.tmp
+*.bak
+
+# Jupyter notebooks checkpoints
+.ipynb_checkpoints/
+
+# System files
+.DS_Store
+Thumbs.db
+
+# IDE/editor configs
+.vscode/
+.idea/
+*.swp

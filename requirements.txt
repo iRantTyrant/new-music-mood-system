@@ -1,0 +1,4 @@
+essentia-tensorflow==2.1b6.dev1110
+numpy==1.21.6
+PyYAML==6.0.1
+six==1.17.0
