@@ -1,6 +1,7 @@
 # Project Overview
 
-This project processes `.wav` audio files using a pipeline defined in `main.py`. The pipeline handles loading the audio files, processing them, and extracting the valence - arousal of songs. THis will determine the mood of a song . This will be done by two models from Essentia `DEAM-Vgggish-audioset` for the prediction and `VGGISH-3-audioset` for extraction . Links to Essentia-TensorFlow `https://essentia.upf.edu/models.html`. Reccomended system OS is Linux
+This project processes `.wav` audio files using a pipeline defined in `main.py`. The pipeline handles loading the audio files, processing them, and extracting the valence - arousal of songs. THis will determine the mood of a song . This will be done by two models from Essentia `DEAM-Vgggish-audioset` for the prediction and `VGGISH-3-audioset` for extraction . The mood mapping is based on Russell's Circumplex Model of Affect.
+Links to Essentia-TensorFlow `https://essentia.upf.edu/models.html`. Reccomended system OS is Linux
 
 ## Setup Instructions
 
