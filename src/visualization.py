@@ -7,13 +7,17 @@ _mean_points = []  # Για τα mean σημεία όλων των τραγου�
 mood_colors = {
     "Neutral / Ambiguous": "gray",
     "Happy": "yellow",
-    "Excited": "orange",
     "Relaxed": "green",
     "Calm": "blue",
     "Angry": "red",
     "Sad": "purple",
     "Depressed": "brown",
-    "Tense": "magenta",
+    "Pleasant": "#FFD700",
+    "Aroused": "#FF4500",
+    "Frustrated": "#8B0000",
+    "Slightly Sad": "#000000",
+    "Content": "#90EE90",
+    "Sorrowful": "#4B0082"
 }
 
 def add_point_to_visualization(valence, arousal, mood):

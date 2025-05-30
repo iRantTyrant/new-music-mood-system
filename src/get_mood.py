@@ -1,44 +1,46 @@
-def map_valence_arousal_to_mood(valence, arousal):
-    neutral_radius = 0.05  # ακτίνα για neutral
-    
-    # Υπολογισμός απόστασης από το κέντρο (0,0)
-    distance = (valence**2 + arousal**2)**0.5
-    
-    # Αν είμαστε κοντά στο κέντρο -> Neutral
-    if distance <= neutral_radius:
-        return "Neutral / Ambiguous"
-    
-    # Διαχωριστικά όρια (μηδενικά) για valence και arousal
-    valence_pos = valence > 0
-    valence_neg = valence < 0
-    arousal_pos = arousal > 0
-    arousal_neg = arousal < 0
+import math
 
-    # 8 moods με βάση τεταρτημόρια (και midpoints)
-    if valence_pos and arousal_pos:
-        # Πάνω δεξιά τεταρτημόριο
-        if valence > arousal:
-            return "Happy"
-        else:
-            return "Excited"
-    elif valence_pos and arousal_neg:
-        # Κάτω δεξιά τεταρτημόριο
-        if valence > -arousal:
-            return "Relaxed"
-        else:
-            return "Calm"
-    elif valence_neg and arousal_pos:
-        # Πάνω αριστερά τεταρτημόριο
-        if -valence > arousal:
-            return "Depressed"
-        else:
-            return "Angry"
-    elif valence_neg and arousal_neg:
-        # Κάτω αριστερά τεταρτημόριο
-        if -valence > -arousal:
-            return "Sad"
-        else:
-            return "Tense"
-    else:
-        # Σε περίπτωση που valence ή arousal είναι ακριβώς 0
+"""
+Converts valence and arousal to a mood label using Russell's Circumplex Model of Affect.
+
+Parameters:
+- valence (float): Emotional valence [-1, 1]
+- arousal (float): Emotional arousal [-1, 1]
+
+Returns:
+- str: Mood label
+"""
+
+def map_valence_arousal_to_mood(valence, arousal):
+    distance = math.sqrt(valence**2 + arousal**2)
+    if distance < 0.05:
         return "Neutral / Ambiguous"
+
+    angle = math.degrees(math.atan2(arousal, valence))
+    if angle < 0:
+        angle += 360
+
+    if 0 <= angle < 30:
+        return "Pleasant"
+    elif 30 <= angle < 60:
+        return "Happy"
+    elif 60 <= angle < 90:
+        return "Aroused"
+    elif 90 <= angle < 120:
+        return "Angry"
+    elif 120 <= angle < 150:
+        return "Frustrated"
+    elif 150 <= angle < 180:
+        return "Sad"
+    elif 180 <= angle < 210:
+        return "Depressed"
+    elif 210 <= angle < 240:
+        return "Slightly Sad"
+    elif 240 <= angle < 270:
+        return "Calm"
+    elif 270 <= angle < 300:
+        return "Relaxed"
+    elif 300 <= angle < 330:
+        return "Content"
+    else:  # 330 <= angle < 360
+        return "Sorrowful"
