@@ -36,7 +36,7 @@ def reset_mean_points():
     global _mean_points
     _mean_points.clear()
 
-def plot_all_points(audio_file_name):
+def plot_all_points(audio_file_name , output_dir="plots"):
     if not _points:
         print("No data to plot.")
         return
@@ -45,7 +45,7 @@ def plot_all_points(audio_file_name):
     ax = plt.gca()
     ax.set_facecolor('#f9f9f9')
 
-    os.makedirs("plots", exist_ok=True)
+    os.makedirs(output_dir, exist_ok=True)
 
     neutral_zone = plt.Circle((0, 0), 0.05, color='gray', alpha=0.2, label="Neutral zone")
     ax.add_artist(neutral_zone)
@@ -68,7 +68,7 @@ def plot_all_points(audio_file_name):
 
     plt.grid(True, linestyle=':', linewidth=0.5)
     plt.tight_layout()
-    output_path = f"plots/{audio_file_name}_mood_plot.png"
+    output_path = os.path.join(output_dir, f"{audio_file_name}_mood_plot.png")
     plt.savefig(output_path)
     plt.close()
     print(f"[INFO] Saved mood plot: {output_path}")

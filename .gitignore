@@ -21,8 +21,8 @@ env/
 *.tmp
 *.bak
 
-# Jupyter notebooks checkpoints
-.ipynb_checkpoints/
+#Temp frames
+frames_temp/
 
 # System files
 .DS_Store
@@ -32,3 +32,4 @@ Thumbs.db
 .vscode/
 .idea/
 *.swp
+
