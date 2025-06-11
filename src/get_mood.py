@@ -1,22 +1,20 @@
 import math
+import numpy as np
 
-"""
-Converts valence and arousal to a mood label using Russell's Circumplex Model of Affect.
+def compute_adaptive_threshold(points):
+    distances = [math.sqrt(v**2 + a**2) for v, a, _ in points]
+    median_distance = np.median(distances)
+    threshold = max(median_distance * 0.8, 0.05)  
+    print(f"Median distance: {median_distance}, Adaptive threshold: {threshold}")
+    return threshold
 
-Parameters:
-- valence (float): Emotional valence [-1, 1]
-- arousal (float): Emotional arousal [-1, 1]
-
-Returns:
-- str: Mood label
-"""
-
-def map_valence_arousal_to_mood(valence, arousal):
+def map_valence_arousal_to_mood(valence, arousal, threshold):
     distance = math.sqrt(valence**2 + arousal**2)
-    if distance < 0.05:
+    if distance < threshold:
         return "Neutral / Ambiguous"
-
+    
     angle = math.degrees(math.atan2(arousal, valence))
+    print(f"Computed angle: {angle} degrees", f"with valence: {valence}, arousal: {arousal}, threshold: {threshold},distance: {distance}")
     if angle < 0:
         angle += 360
 
@@ -42,5 +40,5 @@ def map_valence_arousal_to_mood(valence, arousal):
         return "Relaxed"
     elif 300 <= angle < 330:
         return "Content"
-    else:  # 330 <= angle < 360
+    else:
         return "Sorrowful"

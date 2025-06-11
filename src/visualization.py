@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import os
 
 _points = []       # Για τα σημεία κάθε τραγουδιού (dynamic)
-_mean_points = []  # Για τα mean σημεία όλων των τραγουδιών (all songs plot)
+_median_points = []  # Για τα median σημεία όλων των τραγουδιών (all songs plot)
 
 mood_colors = {
     "Neutral / Ambiguous": "gray",
@@ -24,17 +24,17 @@ def add_point_to_visualization(valence, arousal, mood):
     global _points
     _points.append((valence, arousal, mood))
 
-def add_mean_point(valence, arousal, mood):
-    global _mean_points
-    _mean_points.append((valence, arousal, mood))
+def add_median_point(valence, arousal, mood):
+    global _median_points
+    _median_points.append((valence, arousal, mood))
 
 def reset_points():
     global _points
     _points.clear()
 
-def reset_mean_points():
-    global _mean_points
-    _mean_points.clear()
+def reset_median_points():
+    global _median_points
+    _median_points.clear()
 
 def plot_all_points(audio_file_name , output_dir="plots"):
     if not _points:
@@ -73,9 +73,9 @@ def plot_all_points(audio_file_name , output_dir="plots"):
     plt.close()
     print(f"[INFO] Saved mood plot: {output_path}")
 
-def plot_all_mean_points():
-    if not _mean_points:
-        print("No mean data to plot.")
+def plot_all_median_points():
+    if not _median_points:
+        print("No median data to plot.")
         return
 
     plt.figure(figsize=(8, 8))
@@ -87,7 +87,7 @@ def plot_all_mean_points():
     neutral_zone = plt.Circle((0, 0), 0.05, color='gray', alpha=0.2, label="Neutral zone")
     ax.add_artist(neutral_zone)
 
-    for valence, arousal, mood in _mean_points:
+    for valence, arousal, mood in _median_points:
         color = mood_colors.get(mood, "black")
         ax.scatter(valence, arousal, color=color, s=50, alpha=0.9, label=mood)  # Μεγαλύτερα σημεία
 
@@ -97,7 +97,7 @@ def plot_all_mean_points():
     plt.ylim(-1, 1)
     plt.xlabel("Valence (-1 to 1)")
     plt.ylabel("Arousal (-1 to 1)")
-    plt.title("Mean Valence-Arousal Mood Map for All Songs")
+    plt.title("Median Valence-Arousal Mood Map for All Songs")
 
     handles, labels = ax.get_legend_handles_labels()
     unique = dict(zip(labels, handles))
@@ -105,8 +105,8 @@ def plot_all_mean_points():
 
     plt.grid(True, linestyle=':', linewidth=0.5)
     plt.tight_layout()
-    output_path = "plots/all_songs_mean_mood_plot.png"
+    output_path = "plots/all_songs_median_mood_plot.png"
     plt.savefig(output_path)
     plt.close()
-    print(f"[INFO] Saved mean mood plot for all songs: {output_path}")
+    print(f"[INFO] Saved median mood plot for all songs: {output_path}")
 

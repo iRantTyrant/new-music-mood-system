@@ -31,18 +31,18 @@ def get_emotion_predictions(audio_path, vggish_model_path, deam_model_path):
         predictions, original_min=1, original_max=9, new_min=-1, new_max=1
     )
 
-    # Get mean values for all predictions
-    mean_preds = np.mean(predictions, axis=0)
-    mean_preds_norm_0_1 = np.mean(predictions_norm_0_1, axis=0)
-    mean_preds_norm_m1_1 = np.mean(predictions_norm_m1_1, axis=0)
+    # Get median values for all predictions
+    median_preds = np.median(predictions, axis=0)
+    median_preds_norm_0_1 = np.median(predictions_norm_0_1, axis=0)
+    median_preds_norm_m1_1 = np.median(predictions_norm_m1_1, axis=0)
 
     #We return everything so we can use whatever we want
     return {
         "predictions": predictions,
-        "mean": mean_preds,
+        "median": median_preds,
         "predictions_normalized_0_1": predictions_norm_0_1,
-        "mean_normalized_0_1": mean_preds_norm_0_1,
+        "median_normalized_0_1": median_preds_norm_0_1,
         "predictions_normalized_minus1_1": predictions_norm_m1_1,
-        "mean_normalized_minus1_1": mean_preds_norm_m1_1
+        "median_normalized_minus1_1": median_preds_norm_m1_1
     }
 

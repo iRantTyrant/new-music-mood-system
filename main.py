@@ -1,10 +1,10 @@
 #Import necessary libraries and functions
 import os #For file and directory handling
 from src.prediction import get_emotion_predictions #To get the predictions from the models
-from src.get_mood import map_valence_arousal_to_mood #To match the predictions to a mood
+from src.get_mood import map_valence_arousal_to_mood,compute_adaptive_threshold #To match the predictions to a mood
 from src.visualization import (
     add_point_to_visualization, plot_all_points, reset_points,
-    add_mean_point, plot_all_mean_points, reset_mean_points
+    add_median_point, plot_all_median_points, reset_median_points , _points
 )#To visualize the songs 
 from src.dynamic_visualization import process_visualization_for_song#For the dynamic visualization
 
@@ -15,7 +15,7 @@ deam_model_path = "models/deam-audioset-vggish-2.pb" #For the DEAM predictor mod
 
 audio_files = [f for f in os.listdir(folder) if f.endswith('.wav')] #Take all the files that end in .wav (can be changed to what we want)
 
-reset_mean_points()  #Clean the plot that saves the mean valence arousal (1 for each song not the dynamic one)
+reset_median_points()  #Clean the plot that saves the median valence arousal (1 for each song not the dynamic one)
 
 #Main for that calls the functions once for each song (each iteration of the for loop)
 for audio_file in audio_files:
@@ -30,21 +30,29 @@ for audio_file in audio_files:
     #Get the Valence and Arousal of a song
     preds = get_emotion_predictions(audio_path, vggish_model_path, deam_model_path)
 
+    # Δημιουργούμε λίστα points για threshold (valence, arousal, mood=None)
+    points_for_threshold = [(val, ar, None) for val, ar in preds["predictions_normalized_minus1_1"]]
+
+    # Compute adaptive threshold based on all points
+    threshold = compute_adaptive_threshold(points_for_threshold)
+
     # 1. Dynamic visualization per song (frame-by-frame)
-    process_visualization_for_song(preds, audio_file)
+    process_visualization_for_song(preds, audio_file,threshold)
 
     # 2. Προσθήκη μέσου σημείου στη λίστα για το all-songs plot
-    valence_mean = preds["mean_normalized_minus1_1"][0]
-    arousal_mean = preds["mean_normalized_minus1_1"][1]
-    valence_DEAM = preds["mean"][0]
-    arousal_DEAM = preds["mean"][1]
-    mood = map_valence_arousal_to_mood(valence_mean, arousal_mean)
-    print(f"Mean Valence: {valence_mean:.2f}, Mean Arousal: {arousal_mean:.2f}, Mood: {mood}")
-    print(f"DEAM Mean Valence: {valence_DEAM:.2f}, DEAM Mean Arousal: {arousal_DEAM:.2f}")
+    valence_median = preds["median_normalized_minus1_1"][0]
+    arousal_median = preds["median_normalized_minus1_1"][1]
+    valence_DEAM = preds["median"][0]
+    arousal_DEAM = preds["median"][1]
 
-    add_mean_point(valence_mean, arousal_mean, mood)
+    mood = map_valence_arousal_to_mood(valence_median, arousal_median, threshold)
 
-# 3. Σχεδίαση ενιαίου plot με τα mean σημεία όλων των τραγουδιών
-plot_all_mean_points()
+    print(f"Median Valence: {valence_median:.2f}, Median Arousal: {arousal_median:.2f}, Mood: {mood}")
+    print(f"DEAM Median Valence: {valence_DEAM:.2f}, DEAM Median Arousal: {arousal_DEAM:.2f}")
+
+    add_median_point(valence_median, arousal_median, mood)
+
+# 3. Σχεδίαση ενιαίου plot με τα median σημεία όλων των τραγουδιών
+plot_all_median_points()
 
 print("\n[INFO] Όλα τα plots δημιουργήθηκαν επιτυχώς!")

@@ -8,7 +8,7 @@ import json #For saving the metadata of the song
 
 
 #The actual function 
-def process_visualization_for_song(preds, audio_file_name):
+def process_visualization_for_song(preds, audio_file_name,threshold):
     """
     Παίρνει όλα τα valence/arousal frames και φτιάχνει scatter plot.
     """
@@ -21,7 +21,7 @@ def process_visualization_for_song(preds, audio_file_name):
 
     #For loop that for each iteration it maps the valence arousal to a mood gets it's colour and adds it to the plot
     for val, ar in zip(valences, arousals):
-        mood = map_valence_arousal_to_mood(val, ar)
+        mood = map_valence_arousal_to_mood(val, ar,threshold)
         add_point_to_visualization(val, ar, mood)
 
     #Create a directory for each song based on the slugifyied name 
@@ -36,14 +36,14 @@ def process_visualization_for_song(preds, audio_file_name):
     create_dynamic_animation(audio_file_name, output_dir=song_output_dir, frame_interval_sec=0.5)
 
     #JSON metadata for the song
-    mean_valence = preds["mean_normalized_minus1_1"][0]
-    mean_arousal = preds["mean_normalized_minus1_1"][1]
-    mood = map_valence_arousal_to_mood(mean_valence, mean_arousal)
+    median_valence = preds["median_normalized_minus1_1"][0]
+    median_arousal = preds["median_normalized_minus1_1"][1]
+    mood = map_valence_arousal_to_mood(median_valence, median_arousal,threshold)
 
     with open(os.path.join(song_output_dir, "metadata.json"), "w") as f:
         json.dump({
             "title": audio_file_name,
-            "valence": mean_valence,
-            "arousal": mean_arousal,
+            "valence": median_valence,
+            "arousal": median_arousal,
             "mood": mood
         }, f, indent=2)
