@@ -68,7 +68,7 @@ def plot_all_points(audio_file_name , output_dir="plots"):
 
     plt.grid(True, linestyle=':', linewidth=0.5)
     plt.tight_layout()
-    output_path = os.path.join(output_dir, f"{audio_file_name}_mood_plot.png")
+    output_path = os.path.join(output_dir, f"mood_plot.png")
     plt.savefig(output_path)
     plt.close()
     print(f"[INFO] Saved mood plot: {output_path}")

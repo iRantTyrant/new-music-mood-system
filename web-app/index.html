@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Music Mood Analyzer</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-b from-indigo-100 to-white min-h-screen p-8">
+  <div class="max-w-7xl mx-auto text-center"> <!-- Increased max width here -->
+    <h1 class="text-4xl font-bold text-indigo-700 mb-4">🎧 Music Mood Analyzer</h1>
+    <p class="text-lg text-gray-700 mb-8">
+      Αυτό το web app αναλύει τα συναισθήματα ενός τραγουδιού μέσω της μουσικής του — δείχνοντας valence, arousal, mood και ένα animation της συναισθηματικής του δυναμικής!
+    </p>
+
+    <div class="mb-6">
+      <label for="song-select" class="block text-gray-700 text-lg font-medium mb-2">Επίλεξε ένα τραγούδι:</label>
+      <select id="song-select" class="w-full p-3 rounded border shadow" onchange="loadSongDetails(this.value)">
+        <option disabled selected>-- Διάλεξε τραγούδι --</option>
+      </select>
+    </div>
+
+    <div id="song-details" class="bg-white rounded-xl shadow p-6 mt-6 hidden">
+      <h2 class="text-2xl font-semibold mb-2" id="song-title"></h2>
+      <p class="text-gray-700 mb-2"><strong>Mood:</strong> <span id="mood"></span></p>
+      <p class="text-gray-700 mb-2"><strong>Valence:</strong> <span id="valence"></span></p>
+      <p class="text-gray-700 mb-2"><strong>Arousal:</strong> <span id="arousal"></span></p>
+      
+      <div class="flex justify-center mt-2 gap-8 transition transition-opacity duration-500 opacity-100" id="visualization-container">
+        <div class="mt-4 w-[800px] h-[600px] flex items-center justify-center border-r mr-8" id="plot-container">
+          <img id="plot" class="w-full rounded" alt="Plot δεν βρέθηκε 😢"/>
+        </div>
+        <div class="mt-4 w-[900px] h-[600px] flex items-center justify-center border-l pl-8" id="mood-animation-container">
+          <video id="animation" class="w-full h-full object-contain rounded" controls autoplay muted loop playsinline>
+            Ο περιηγητής σου δεν υποστηρίζει video.
+          </video>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="./script.js"></script>
+</body>
+</html>
+

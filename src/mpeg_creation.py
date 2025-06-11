@@ -62,8 +62,8 @@ def create_dynamic_animation(audio_file_name, output_dir="plots", frame_interval
         plt.close()
 
     # μονοπάτια εξόδου
-    mp4_path = os.path.join(output_dir, f"{audio_file_name}_mood_animation.mp4")
-    gif_path = os.path.join(output_dir, f"{audio_file_name}_mood_animation.gif")
+    mp4_path = os.path.join(output_dir, f"mood_animation.mp4")
+    gif_path = os.path.join(output_dir, f"mood_animation.gif")
 
     print("[FFMPEG] Δημιουργία MP4...")
     subprocess.run([

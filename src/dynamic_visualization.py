@@ -30,7 +30,7 @@ def process_visualization_for_song(preds, audio_file_name,threshold):
     os.makedirs(song_output_dir, exist_ok=True)
 
     #Save the plot of the song
-    plot_all_points(audio_file_name + " 's Dynamic Visualization" , output_dir=song_output_dir)
+    plot_all_points("mood_plot", output_dir=song_output_dir)
 
     #The function that creates a snake like trace animation
     create_dynamic_animation(audio_file_name, output_dir=song_output_dir, frame_interval_sec=0.5)
