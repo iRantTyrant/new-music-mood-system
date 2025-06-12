@@ -7,6 +7,7 @@ from src.visualization import (
     add_median_point, plot_all_median_points, reset_median_points , _points
 )#To visualize the songs 
 from src.dynamic_visualization import process_visualization_for_song#For the dynamic visualization
+import shutil
 
 #Directory paths 
 folder = "data" #For the folder that has the songs we want to process
