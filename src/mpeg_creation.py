@@ -5,6 +5,7 @@ from tqdm import tqdm
 from src.visualization import mood_colors, _points
 import subprocess
 import shutil
+from src.move_song import move_wav_to_output
 def create_dynamic_animation(audio_file_name, output_dir="plots", frame_interval_sec=0.5):
     points = _points
     if not points:
@@ -81,5 +82,7 @@ def create_dynamic_animation(audio_file_name, output_dir="plots", frame_interval
 
     print(f"[DONE] Saved: {mp4_path} and {gif_path}")
 
+    #Move song to the directory 
+    move_wav_to_output(audio_file_name, "../data" , output_dir)
     #clean up frames
     shutil.rmtree(frames_dir)

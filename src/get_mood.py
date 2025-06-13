@@ -14,7 +14,7 @@ def map_valence_arousal_to_mood(valence, arousal, threshold):
         return "Neutral / Ambiguous"
     
     angle = math.degrees(math.atan2(arousal, valence))
-    print(f"Computed angle: {angle} degrees", f"with valence: {valence}, arousal: {arousal}, threshold: {threshold},distance: {distance}")
+    
     if angle < 0:
         angle += 360
 

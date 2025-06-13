@@ -1,0 +1,36 @@
+#bleed-div {
+    animation: pulseGlow 3s ease-in-out infinite;
+    transition: background-color 0.5s ease, opacity 0.5s ease;
+    opacity: 0;
+}
+
+@keyframes pulseGlow {
+    0%, 100% {
+    opacity: 0.4;
+    }
+    50% {
+    opacity: 1;
+    }
+}
+
+#song-details {
+    transition: opacity 0.7s ease;
+}
+
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+#animated-gradient {
+  background: linear-gradient(270deg, #d6d6d6, #969696, #525151);
+  background-size: 600% 600%;
+  animation: gradientShift 10s ease infinite;
+}
